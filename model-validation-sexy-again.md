@@ -36,35 +36,12 @@ footer: '![width:90 height:40](figures/logo/NGI/NGI_logo_transparent.gif)'
 ---
 
 
-Who I am and what I do, background and current working place 
-
-
---- 
-
-
-<!-- paginate: true -->
-
-<!-- _footer: "![width:90 height:40](figures/logo/NGI/NGI_logo_transparent.gif)  *Figure credit: [iStock](https://www.istockphoto.com/search/2/image?phrase=e%3Dmc2)* " -->
-
-# A typical scientist 
-
-
-Trys to understad a simplified version of the real world 
-
- 
-|![w:300 h:350](figures/illustrations/horse.png) |
-|:--:|
-| Figure: the horse, *credit: [Ali Bati](http://www.alibati.com/horse)* |
-
-
-
---- 
 
 <!-- paginate: true -->
 
 <!-- _footer: "![width:90 height:40](figures/logo/NGI/NGI_logo_transparent.gif)  *Figure credit: [Ali Bati](http://www.alibati.com/horse)* " -->
 
-# Typical scientist's work? 
+# Scientist's work? 
 
 
 - Understand a simplified version of the real world 
@@ -77,93 +54,74 @@ Trys to understad a simplified version of the real world
 
 --- 
 
+<!-- paginate: true -->
+
+<!-- _footer: "![width:90 height:40](figures/logo/NGI/NGI_logo_transparent.gif)  *Figure credit: [Ali Bati](http://www.alibati.com/horse)* " -->
+
+
+
+# RSE's work? 
+
+
+- **Code and** understand a simplified version of the real world 
+
+
+ 
+![bg right w:400 h:350](figures/illustrations/horse.png) 
+
+
+
+--- 
+
+
 # Data Model 
 
-> A data model is an abstract model that organizes elements of data and standardizes how they relate to one another and to the properties of real-world entities, *from [Wikipedia](https://en.wikipedia.org/wiki/Data_model)*
+> A data model is an abstract model that organizes elements of data and standardizes how they relate to one another and to the properties of real-world entities.
 
+*from [Wikipedia](https://en.wikipedia.org/wiki/Data_model)*
 
 
 ---
 
 
-# *Example*: a complex data model 
+# Building a data model 
 
 |![](figures/illustrations/start.png) |
 |:--:|
 | Figure: a model of a turbine |
 
 
-<!-- |![](../figures/simple_model.png) |
+--- 
+
+
+# Building a data model 
+
+|![w:500 h:450](figures/illustrations/simple_model.png) |
 |:--:|
 | Figure: a simple model of a turbine + environment |
 
+--- 
 
 
-|![](../figures/bit_hard.png) |
+# Building a data model 
+
+|![w:500 h:450](figures/illustrations/bit_hard.png) |
 |:--:|
-| Figure: a bit hard model of a turbine + environment|
-
-
-
-|![](../figures/full_model.png) |
-|:--:|
-| Figure: a full model of a turbine + environment| -->
-
+| Figure: a less simpler model of a turbine + environment|
 
 
 --- 
 
 
+# Building a data model 
 
-
-<div align="center">  
-
-# Building a data model   
-
-
-
-![w:400 h:400](figures/illustrations/start.png) 
-
-
-
----
-
-
-<div align="center">  
-
-# Building a data model      
-
-
-
-![w:400 h:400](figures/illustrations/simple_model.png) 
-
-
----
-
-<div align="center">  
-
-# Building a data model   
-
-
-
-![w:400 h:400](figures/illustrations/bit_hard.png) 
-
-
-
----
-
-<div align="center">  
-
-# Building a data model     
-
-
-
-![w:400 h:400](figures/illustrations/full_model.png) 
-
-
-
+|![w:500 h:450](figures/illustrations/full_model.png) |
+|:--:|
+| Figure: a full model of a turbine + environment|
 
 --- 
+
+
 
 
 <div align="center"> 
@@ -173,126 +131,130 @@ Trys to understad a simplified version of the real world
 
 ![w:400 h:400](figures/illustrations/hero.png) 
 
-
-
 --- 
-
 
 # What is pydantic? 
 
->  **[From the official docs](https://pydantic-docs.helpmanual.io/):** *Data validation and settings management using python type annotations. Pydantic enforces type hints at runtime, and provides user friendly errors when data is invalid.*
+>  Data validation and settings management using python type annotations. Pydantic enforces type hints at runtime, and provides user friendly errors when data is invalid.
+> 
+*[From the official docs](https://pydantic-docs.helpmanual.io/)*
 
-
-
+GitHub: :star: 11.3k (currently, 18.10.22) 
 
 
 --- 
 
-# Class definitions
 
-<!-- _class: split-text -->
+# Class definitions 
 
-<div class=ldiv>
+<div class="twocols">
 
 ```python
-class LinearElasticMaterial(BaseModel):
-    material_ID: int = Field(
-        default=1001,
-        ge=1001,
-        le=1999,
-        description="Linear elastic material for the pile foundation",
+from pydantic import BaseModel, Field
+
+class SoilLayer(BaseModel):
+    depth: float = Field(description="Depth from seabed to soil later")
+    number_of_elements: int = Field(
+        description="Number of elements of this material at this depth"
     )
-    G: float = Field(ge=0.0001, description="Material shear modulus [kPa]")
-   
-    K_0: Optional[float] = Field(description="Horizontal stress factor")
-    
-    # ... etc. for validation
+   # ... etc. for validation 
 ```
-<!-- _Linear elastic model class_  -->
+
+<p class="break"></p>
 
 ```python
 class TurbineModel(BaseModel):
-    soil_layers: List[SoilLayer]
-    linear_elastic_materials: List[LinearElasticMaterial]
+    soil_layers: list[SoilLayer]
     load_step_num: int = Field(
          default=20, ge=0, description="Number of load steps in cycle"
     )
     
     # ... etc. for validation 
 ```
-<!-- _Main class_ -->
-
- 
-</div>
-
-<div class=rdiv>
-
-
-
-
-
-```python
-class SoilLayer(BaseModel):
-    depth: float = Field(description="Depth from seabed to soil later")
-    material_ID: str = Field(description="Material type of current soil layer")
-    number_of_elements: int = Field(
-        description="Number of elements of this material at this depth"
-    )
-
-   # ... etc. for validation 
-```
 
 </div>
 
 
 --- 
 
-# Input with dictionaries 
+# Give input with dictionaries 
 
 ```python
-linear_elastic_materials = {"material_ID": 1001, "G": 80800000.0}
+soil_layers = [{"depth": 0, "number_of_elements": 2},{"depth":2, "number_of_elements": 3}]
 
 simulation_steps = 20
 
 turbine_model = TurbineModel(
-        linear_elastic_materials=linear_elastic_material,
+        soil_layers=soil_layers,
         load_step_num = simulation_steps
     )
+
+print(f"My turbine model: {turbine_model}")
 ```
 
-# Error message
+# Print message
 ```python 
-pydantic.error_wrappers.ValidationError: 1 validation error for LinearElasticMaterial
-material_ID
-  ensure this value is less than or equal to 1999 (type=value_error.number.not_le; limit_value=1999)
+My turbine model: soil_layers=[SoilLayer(depth=0.0, number_of_elements=2), SoilLayer(depth=2.0, number_of_elements=3)] load_step_num=20
 ```
 
 
 ---
 
+# Give input with dictionaries 
 
+```python
+soil_layers = [{"depth": 0, "number_of_elements": 2},{"depth":2, "number_of_elements": 3}]
 
+simulation_steps = -20
 
+turbine_model = TurbineModel(
+        soil_layers=soil_layers,
+        load_step_num = simulation_steps
+    )
 
-# Nifty integration for "free"
- 
-<div align="center"> 
+print(f"My turbine model: {turbine_model}")
+```
 
-
-![w:550 h:480](figures/illustrations/inputfiles/fast-api-infidep.png) 
-*Automatic docs with fast-API* 
+# "Free" error messages
+```python 
+pydantic.error_wrappers.ValidationError: 1 validation error for TurbineModel
+load_step_num ensure this value is greater than or equal to 0 (type=value_error.number.not_ge; limit_value=0)
+```
 
 
 ---
-
-
 
 
 # Summary 
 
-:boom: Pydantic let's you focus on your algorithm and not input validation  :boom:
+:boom: Pydantic let's you focus on your algorithm and not data model validation :boom:
+
+## Other cool tools for model validation 
+- [Pandera](https://pandera.readthedocs.io/en/stable/), for data-validation on dataframe-like objects 
+  GitHub :star: 1.7k (currently, 18.10.22)
+  
+--- 
+
+# Calling procedure 
+
+|![w:550 h:380](figures/illustrations/infidep-classic.png) |
+|:--:|
+| Figure: local usage |
+
+--- 
 
 
 
+# Calling procedure 
 
+
+
+|![w:550 h:380](figures/illustrations/infidep-api-container.png) |
+|:--:|
+| Figure: modernized usage |
+
+
+---
+
+# [Demo repository]() 
 
