@@ -225,16 +225,6 @@ load_step_num ensure this value is greater than or equal to 0 (type=value_error.
 ---
 
 
-# Summary 
-
-:boom: Pydantic let's you focus on your algorithm and not data model validation :boom:
-
-## Other cool tools for model validation 
-- [Pandera](https://pandera.readthedocs.io/en/stable/), for data-validation on dataframe-like objects 
-  GitHub :star: 1.7k (currently, 18.10.22)
-  
---- 
-
 # Calling procedure 
 
 |![w:550 h:380](figures/illustrations/infidep-classic.png) |
@@ -256,5 +246,17 @@ load_step_num ensure this value is greater than or equal to 0 (type=value_error.
 
 ---
 
-# [Demo repository]() 
+
+
+# Summary 
+
+:boom: Pydantic let's you focus on your algorithm and not data model validation :boom:
+
+## Other cool tools for model validation 
+- [Pandera](https://pandera.readthedocs.io/en/stable/), for data-validation on dataframe-like objects 
+  GitHub :star: 1.7k (currently, 18.10.22)
+
+--- 
+
+# [Demo repository](https://github.com/sunnivin/demo-make-model-validation-sexy-again) 
 
