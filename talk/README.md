@@ -13,14 +13,14 @@ To convert the slidedeck into a *.html file:
 ### Local work with docker
 Use the presentation in local mode with the `watch` command 
 
-    /talk$ docker run --rm --init -v $PWD:/home/marp/app -e LANG=$LANG -p 8080:8080 -p 37717:37717 marpteam/marp-cli:v3.2.0 --theme-set ngi-theme.css --watch -s .
+    docker run --rm --init -v $PWD:/home/marp/app -e LANG=$LANG -p 8080:8080 -p 37717:37717 marpteam/marp-cli:v3.2.0 --theme ngi-theme.css --watch -s .
 
 Convert slide deck into pdf 
-    /talk docker run --rm -v $PWD:/home/marp/app/ -e MARP_USER="$(id -u):$(id -g)" -e LANG=$LANG marpteam/marp-cli:v3.2.0 --theme ngi-theme.css slides.md --pdf
+    docker run --rm -v $PWD:/home/marp/app/ -e MARP_USER="$(id -u):$(id -g)" -e LANG=$LANG marpteam/marp-cli:v3.2.0 --theme ngi-theme.css slides.md --pdf
 
 Convert slide deck into html 
 
-    /talk docker run --rm -v $PWD:/home/marp/app/ -e MARP_USER="$(id -u):$(id -g)" -e LANG=$LANG marpteam/marp-cli:v3.2.0 --theme ngi-theme.css slides.md --html
+    docker run --rm -v $PWD:/home/marp/app/ -e MARP_USER="$(id -u):$(id -g)" -e LANG=$LANG marpteam/marp-cli:v3.2.0 --theme ngi-theme.css slides.md --html
 
 
 
