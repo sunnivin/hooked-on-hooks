@@ -1,14 +1,29 @@
 ---
 marp: true
-theme: ngi-theme
+theme: ngi-theme.css
 paginate: false
 header: '_19.10.2022_'
 footer: '![width:90 height:40](figures/logo/NGI/NGI_logo_transparent.gif)'
+
 
 ---
 
 <!-- _class: title --> 
 # Make model validation sexy again 
+
+
+## 
+
+####
+
+#### Sunniva Indrehus
+#### Norwegian Geotechnical Institute
+
+
+---
+
+<!-- _class: title --> 
+# Keep model validation sexy again 
 
 
 ## 
@@ -139,11 +154,13 @@ footer: '![width:90 height:40](figures/logo/NGI/NGI_logo_transparent.gif)'
 > 
 *[From the official docs](https://pydantic-docs.helpmanual.io/)*
 
-GitHub: :star: 11.3k (currently, 18.10.22) 
+:star: GitHub 15.4k (22.08.23)
+:package: [Downlaods per week](https://pypistats.org/packages/pydantic) $\approx$ 22M (22.08.23)
+
+
 
 
 --- 
-
 
 # Class definitions 
 
@@ -246,7 +263,61 @@ load_step_num ensure this value is greater than or equal to 0 (type=value_error.
 
 ---
 
+# Testing next
 
+|![w:550 h:380](figures/illustrations/infidep-api-container.png) | *Dummy*| 
+|:--:| :--:|
+| 
+- Testing item
+- Item 1 
+| Text |
+
+
+--- 
+
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
+| - item1 - item2</li></ul>| See the list | from the first column|
+
+
+---
+
+<style scoped>
+table {
+    height: 100%;
+    width: 100%;
+    font-size: 20px;
+    color: red;
+}
+th {
+    color: blue;
+}
+</style>
+
+# Fruit Table -- styled
+
+Fruit | Colour | Amount | Cost
+-----|------|:-----:|------:
+Banana | Yellow | 4 | £1.00
+Apple | Red | 2 | £0.60
+Orange | Orange | 10 | £2.50
+Coconut | Brown | 1 | £1.50
+
+---
+
+# Fruit Table -- default
+
+Fruit | Colour | Amount | Cost
+-----|------|:-----:|------:
+Banana | Yellow | 4 | £1.00
+Apple | Red | 2 | £0.60
+Orange | Orange | 10 | £2.50
+Coconut | Brown | 1 | £1.50
+
+---
 
 # Summary 
 
