@@ -105,7 +105,7 @@ $ whoami
 ## (Some) new features
 - Functionality for discriminated unions
 - `pydantic.functional_validators` let you do validation without `base_model` (*e.g* a function)
-- Possibility to use `TypeAdapter` instead of `BaseModel`
+    - Possibility to use `TypeAdapter` instead of `BaseModel`
 - You can define `field_serializer` you can do *custom serialization* 
 
 ## Examples and inspiration 
