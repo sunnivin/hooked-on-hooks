@@ -1,0 +1,25 @@
+name: Build HTML Slides
+
+on:
+  push:
+    branches:
+      - main  # Adjust the branch name as needed
+
+jobs:
+  build:
+    name: Build HTML Slides
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker
+        uses: docker/setup-docker@v2
+        with:
+          dockerfile: Dockerfile  # Path to your Dockerfile if needed
+
+      - name: Build HTML slides
+        run: |
+          docker run --rm -v $PWD:/home/marp/app/ -e MARP_USER="$(id -u):$(id -g)" -e LANG=$LANG marpteam/marp-cli:v3.2.0 --theme ngi-theme.css slides.md --html
+        working-directory: ${{ github.workspace }}

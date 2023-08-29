@@ -61,7 +61,6 @@ class Wine(TypedDict):
 
     @field_validator("country", mode="before")
     def country_unknown(cls, s: str | None) -> str:
-        # type: ignore
         if s is None or s == "null":
             return "Unknown"
         else:

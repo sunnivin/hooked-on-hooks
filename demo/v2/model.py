@@ -48,7 +48,7 @@ if __name__ == "__main__":
         "title": "Balduzzi 2012 Reserva Merlot (Maule Valley)",
         "description": "Ripe in color and aromas, this chunky wine delivers heavy baked-berry and raisin aromas in front of a jammy, extracted palate. Raisin and cooked berry flavors finish plump, with earthy notes.",
         "price": 10,  # Intentionally not a float to test coercion
-        "variety": "Merlot",
+        "variety": 1,
         "winery": "Balduzzi",
         "country": "France",  # Test null handling
         "province": "Maule Valley",

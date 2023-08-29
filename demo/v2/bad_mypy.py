@@ -1,3 +1,4 @@
+# pip install pydantic
 from pydantic import TypeAdapter, field_validator
 from typing_extensions import NotRequired, TypedDict
 
