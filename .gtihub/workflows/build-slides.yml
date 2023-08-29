@@ -1,13 +1,13 @@
-name: Build HTML Slides
+name: Build and Publish HTML Slides
 
 on:
   push:
     branches:
-      - main  # Adjust the branch name as needed
+      - main
 
 jobs:
-  build:
-    name: Build HTML Slides
+  build_and_publish:
+    name: Build and Publish HTML Slides
     runs-on: ubuntu-latest
 
     steps:
@@ -17,9 +17,19 @@ jobs:
       - name: Set up Docker
         uses: docker/setup-docker@v2
         with:
-          dockerfile: Dockerfile  # Path to your Dockerfile if needed
+          dockerfile: Dockerfile
 
       - name: Build HTML slides
         run: |
           docker run --rm -v $PWD:/home/marp/app/ -e MARP_USER="$(id -u):$(id -g)" -e LANG=$LANG marpteam/marp-cli:v3.2.0 --theme ngi-theme.css slides.md --html
         working-directory: ${{ github.workspace }}
+
+      - name: Publish to gh-pages
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git checkout gh-pages
+          cp -R ${{ github.workspace }}/* .
+          git add -A
+          git commit -m "Publish generated HTML slides"
+          git push origin gh-pages
