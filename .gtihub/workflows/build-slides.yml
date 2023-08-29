@@ -29,20 +29,21 @@ jobs:
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
 
-      - name: Switch to gh-pages branch
-        run: git checkout gh-pages
-
-      - name: Copy HTML files to talk folder
+      - name: Clone gh-pages branch
         run: |
-          mkdir -p talk
-          cp *.html talk/
+          git clone --branch gh-pages https://github.com/${{ github.repository }}.git gh-pages
+        working-directory: ${{ github.workspace }}
+
+      - name: Copy HTML files to gh-pages branch
+        run: |
+          mkdir -p gh-pages/talk
+          cp *.html gh-pages/talk/
         working-directory: ${{ github.workspace }}
 
       - name: Commit and Push changes to gh-pages
         run: |
+          cd gh-pages
           git add -A
           git commit -m "Publish generated HTML slides"
           git push origin gh-pages
 
-      - name: Switch back to main branch
-        run: git checkout main
