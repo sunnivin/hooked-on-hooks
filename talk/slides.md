@@ -179,6 +179,8 @@ $ whoami
 
 # Demo some benchmarking
 
+All tests on Windows11, with WSL2:Ubuntu-22.04
+
 ## Example run times
 
 129971 records $\cdot$ 5 = 649855 validation operations
@@ -198,6 +200,7 @@ $ whoami
 
 [Explanation](https://github.com/pydantic/pydantic/discussions/6517) of why `TypedDict` work with a `field_validator`, but violates PEP589 
 
+See the different examples in `demo/v2/good_mypy.py` and `demo/v2/bad_mypy.py`
 
 --- 
 # Credit 

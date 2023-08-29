@@ -1,6 +1,7 @@
 *.pdf 
 *.png 
 *.jpg
+*.html
 */__pycache__/*
 .mypy_cache
 __pycache__
