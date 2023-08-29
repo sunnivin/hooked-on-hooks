@@ -24,12 +24,25 @@ jobs:
           docker run --rm -v $PWD:/home/marp/app/ -e MARP_USER="$(id -u):$(id -g)" -e LANG=$LANG marpteam/marp-cli:v3.2.0 --theme ngi-theme.css slides.md --html
         working-directory: ${{ github.workspace }}
 
-      - name: Publish to gh-pages
+      - name: Configure Git
         run: |
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
-          git checkout gh-pages
-          cp -R ${{ github.workspace }}/* .
+
+      - name: Switch to gh-pages branch
+        run: git checkout gh-pages
+
+      - name: Copy HTML files to talk folder
+        run: |
+          mkdir -p talk
+          cp *.html talk/
+        working-directory: ${{ github.workspace }}
+
+      - name: Commit and Push changes to gh-pages
+        run: |
           git add -A
           git commit -m "Publish generated HTML slides"
           git push origin gh-pages
+
+      - name: Switch back to main branch
+        run: git checkout main
