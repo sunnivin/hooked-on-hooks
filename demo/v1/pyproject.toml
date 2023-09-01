@@ -12,6 +12,11 @@ pydantic = "1.10.12"
 srsly = "^2.4.7"
 codetiming = "^1.4.0"
 mypy = "^1.5.1"
+uvicorn = "^0.23.2"
+fastapi = "^0.103.0"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.5.1"
 
 [tool.mypy]
 follow_imports = "silent"

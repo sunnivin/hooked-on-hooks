@@ -2,6 +2,8 @@
 
 This repository contains a [talk](https://sunnivin.github.io/a-new-core/talk/slides.html) and some demos (`demo\v1\`, `demo\v2\`) for exploring the new features of Pydantic v2. 
 
+Compare the how to use v2 by looking at the different scripts with the same names in folder `demo/v1` and `demo/v2`.
+
 
 # Credit 
 
