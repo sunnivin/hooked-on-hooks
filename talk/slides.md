@@ -2,34 +2,33 @@
 marp: true
 theme: ngi-theme.css
 paginate: false
-header: '_23.08.2023_'
+header: '_25.10.2023_'
 footer: '![width:90 height:40](figures/logo/NGI/NGI_logo_transparent.gif)'
 
 
 
---- 
-<!-- _class: title --> 
-# Pydantic v2
+---
+<!-- _class: title -->
+# Hooked on hooks
 
 
-## 
+##
 
-#### 
-#### Technical hour
+####
+#### Nordic-RSE online unconference 2023
 #### Sunniva Indrehus
 
 ---
- 
-<!-- _class: title --> 
-# Pydantic v2 
 
-## 
+<!-- _class: title -->
+# Hooked on hooks
 
-![bg right w:600 h:450](figures/illustrations/new-core.png) 
-#### 
-#### Technical hour
+
+## :snake: + :hook: = :sparkles:
+
+####
+#### Nordic-RSE online unconference 2023
 #### Sunniva Indrehus
-
 
 ---
 
@@ -38,176 +37,172 @@ footer: '![width:90 height:40](figures/logo/NGI/NGI_logo_transparent.gif)'
 ```
 $ whoami
 ```
---- 
+---
+
+<!-- _class: split-text-image -->
+
+# Development speed vs. time
+
+<div class=ldiv>
+
+##
+
+![w:450 h:350](figures/illustrations/development_speed_quick_hacks.png)
+*Figure credit: Radovan Bast*
 
 
-<!-- _footer: "![width:90 height:40](figures/logo/NGI/NGI_logo_transparent.gif)  *Figure credit: [Ali Bati](http://www.alibati.com/horse)* " -->
+</div>
 
-# NGI scientist's aim 
+<div class=rdiv>
 
-- Understand a simplified version of the real world 
+##
 
-![bg right w:400 h:350](figures/illustrations/horse.png) 
+<!-- ![w:450 h:325](figures/illustrations/automate-all.png)
+*Figure Credit: [http://memegenerator.net/](http://memegenerator.net/)*
+ -->
+
+
+</div>
+
 
 ---
 
-# Engineering example  
+<!-- _class: split-text-image -->
 
-- Define a valid **data model**
-- Perform operation X 
-- Iterpret results
+# Development speed vs. time
 
-![bg right w:500 h:450](figures/illustrations/full_model.png) 
+<div class=ldiv>
 
---- 
+##
 
-# Pydantic 
+![w:450 h:350](figures/illustrations/development_speed_quick_hacks.png)
+*Figure credit: Radovan Bast*
 
-:boom: v2.0 released 30.06.2023 :boom: 
 
-## What's the fuzz? 
+</div>
 
-- v2 [promise](https://docs.pydantic.dev/latest/blog/pydantic-v2-alpha/#headlines) 5-50x speed up compared to Pydantic v1
-- :star: GitHub [stars](https://github.com/pydantic/pydantic) 15.4k (22.08.23)
-- :package: [pr week](https://pypistats.org/packages/pydantic) $\approx$ 22M (week 34 2023)
+<div class=rdiv>
 
---- 
+##
 
-# Pydantic
+![w:450 h:325](figures/illustrations/automate-all.png)
+*Figure Credit: [http://memegenerator.net/](http://memegenerator.net/)*
 
-## Why?
- 
-:snake: Python is dynamically typed, and [PEP484 Type Hints](https://peps.python.org/pep-0484/) is not enforced during run time 
 
-## What?
 
-> Pydantic is the most widely used data validation library for Python.
-> 
-*[From the official docs](https://docs.pydantic.dev/latest/#why-use-pydantic)*
+</div>
 
 ---
 
-<!-- _footer: "![width:90 height:40](figures/logo/NGI/NGI_logo_transparent.gif)  *Figure credit: [Prashanth Rao](https://thedataquarry.com/posts/why-pydantic-v2-matters/)* " -->
+# Git-Hooks
 
-# Pydantic v2
 
-## A new core 
+- Automate actions linked to change
+- Language independent
+- Enforce standard(s) in repository
+  - Commit messages
+  - Format
 
-![bg right w:600 h:450](figures/illustrations/v1-v2.png)
+##
 
-- Validations outside of Python
-- Recursive function calls with Rust and small overhead 
-
----
-
-# Pydantic v2 
-
-## (Some) new features
-- Functionality for discriminated unions
-- `pydantic.functional_validators` let you do validation without `base_model` (*e.g* a function)
-    - Possibility to use `TypeAdapter` instead of `BaseModel`
-- You can define `field_serializer` you can do *custom serialization* 
-
-## Examples and inspiration 
-- [Migration guide](https://docs.pydantic.dev/latest/migration/)
-- [v1 to v2 video example](https://www.youtube.com/watch?v=sD_xpYl4fPU)
-
----
-
-# Let's get our hands dirty 
-
---- 
-
-# Data 
-## [Wine reviews from Kaggle](https://www.kaggle.com/datasets/zynicide/wine-reviews)
- 
-```json
-{'country': 'France',
- 'description': 'Ripe in color and aromas, this chunky wine delivers heavy '
-                'baked-berry and raisin aromas in front of a jammy, extracted '
-                'palate. Raisin and cooked berry flavors finish plump, with '
-                'earthy notes.',
- 'id': 45100,
- 'points': 85,
- 'price': 10.0,
- 'province': 'Maule Valley',
- 'taster_name': 'Michael Schachner',
- 'taster_twitter_handle': '@wineschach',
- 'title': 'Balduzzi 2012 Reserva Merlot (Maule Valley)',
- 'variety': 'Merlot',
- 'vineyard': 'The Vineyard',
- 'winery': 'Balduzzi'}
+```bash
+~/hooked-on-magic(main)$ ls -la .git/
+total 56
+...
+drwxr-xr-x  2 sunnivin sunnivin 4096 Oct 25 11:06 hooks
+...
 ```
---- 
-
-# Data model 
-
-## Pydantic's job
-- Ensure the `id` field always exists (this will be the primary key), and is an integer
-- Ensure the `points` field is an integer
-- Ensure the `price` field is a float
-- Ensure the `country` field always has a non-null value – if it’s set as null or the country key doesn’t exist in the raw data, it must be set to Unknown. This is because the use case we defined will involve querying on country downstream
-- Remove fields like designation, `province`, `region_1` and `region_2` if they have the value null in the raw data – these fields will not be queried on and we do not want to unnecessarily store null values downstream
-
---- 
-
-# Demo
-
---- 
-# Speed-up for *free*  :unlock:
-
-| v1 | v2 
-|:---| :---
-| `root_validator` | `@model_validator/@field_validator`
-| `wine = Wine(**sample_data)`| `wine = Wine(**sample_data)`| 
-| `pprint(wine.dict(exclude_none=True, by_alias=True))`| `pprint(wine.model_dump(exclude_none=True, by_alias=True))`
 
 
 ---
 
-# Speed-up with *investements* :moneybag:
+# Python
+
+<!-- _class: split-text-image -->
+
+<div class=ldiv>
+
+##
+
+- High level programming language
+- Dynamically typed
+  - Easy to *use and misuse*
+- [Current version](https://www.python.org/doc/versions/) (25.10.23): 3.12.0
+
+</div>
+
+<div class=rdiv>
+
+![w:550 h:450](figures/illustrations/python_environment.png)
+*Figure credit: [xkcd](https://xkcd.com/1987/)*
 
 
-| v2 | v2-optimized
-| :--- | :---
-| `class Wine(BaseModel)` | `class Wine(TypedDict)`
-| `wine = Wine(**sample_data)`| `wines = WinesTypeAdapter.validate_python([sample_data])`
-
-
+</div>
 
 ---
 
-# Demo some benchmarking
-
-All tests on Windows11, with WSL2:Ubuntu-22.04
-
-## Example run times
-
-129971 records $\cdot$ 5 = 649855 validation operations
-
-| | v1 | v2 | v2-optimized
-:-----|:------|:-----|:------
-**All cases** | 45.380 | 6.944 | 3.582
-**Average pr run** | 9.076 | 1.389 | 0.716
-**Times speed up (v1)** | 1 | 6.534 | 12.678
+<!-- _class: split-text -->
 
 
---- 
 
-# Sometimes tricky with linting 
+# Our [(PEP)](https://peps.python.org/pep-0000/) best friends
 
-## `mypy` integration
+<div class=ldiv>
 
-[Explanation](https://github.com/pydantic/pydantic/discussions/6517) of why `TypedDict` work with a `field_validator`, but violates PEP589 
 
-See the different examples in `demo/v2/good_mypy.py` and `demo/v2/bad_mypy.py`
+#
 
---- 
-# Credit 
+#### [PEP 484](https://peps.python.org/pep-0484/)
 
-- [Pydantic v2 Plan](https://docs.pydantic.dev/latest/blog/pydantic-v2/) (accessed 22.08.2023)
-- Terrence Dorsey and Samuel Colvin [Pydantic v2 Pre Release](https://docs.pydantic.dev/latest/blog/pydantic-v2-alpha/) (accessed 22.08.2023)
-- Prashanth Rao, The Data Quarry, [Obtain a 5x speedup for free by upgrading to Pydantic v2](https://thedataquarry.com/posts/why-pydantic-v2-matters/) (accessed 22.08.2023)
-- Yaakov Bressler in [Medium](https://blog.det.life/dont-write-another-line-of-code-until-you-see-these-pydantic-v2-breakthrough-features-5cdc65e6b448) (accessed 22.08.2023)
-- Samuel Colvin at [PyCon US 2023](https://www.youtube.com/watch?v=pWZw7hYoRVU) (accessed 22.08.2023)
-- Configuring [mypy with Pydantic](https://docs.pydantic.dev/latest/integrations/mypy/#configuring-the-plugin) (accessed 22.08.2023)
+
+- Type annotation
+  - Released 2015-09-13
+- Tool(s)
+  - [mypy](https://mypy.readthedocs.io/en/stable/)
+
+</div>
+
+
+<div class=rdiv>
+
+#
+
+#### [PEP 8](https://peps.python.org/pep-0008/)
+
+- Style guide for Python Code
+  - Released 2013-08-01
+- Tool(s)
+  - [black](https://black.readthedocs.io/en/stable/) or [ruff](https://docs.astral.sh/ruff/)
+  - [flake8](https://flake8.pycqa.org/en/latest/)
+  - [isort](https://pycqa.github.io/isort/)
+
+</div>
+
+---
+
+# :snake: + PEPs + [pre-commit](https://pypi.org/project/pre-commit/) = :sparkles:
+
+
+```bash
+~/hooked-on-hooks$ ls -la .git/hooks
+...
+-rwxr-xr-x 1 sunnivin sunnivin  661 Oct 25 11:06 pre-commit
+-rwxr-xr-x 1 sunnivin sunnivin 1643 Oct 25 08:24 pre-commit.sample
+...
+```
+
+```bash
+~/hooked-on-hooks/demo/$ cat pyproject.toml
+...
+[tool.poetry.dependencies]
+python = "^3.12"
+
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^3.5.0"
+...
+```
+
+---
+
+# [Demo](../demo/)
