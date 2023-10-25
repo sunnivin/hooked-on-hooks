@@ -178,6 +178,11 @@ drwxr-xr-x  2 sunnivin sunnivin 4096 Oct 25 11:06 hooks
 
 </div>
 
+
+---
+
+# [Demo](https://github.com/sunnivin/hooked-on-hooks/tree/main/demo)
+
 ---
 
 # :snake: + PEPs + [pre-commit](https://pypi.org/project/pre-commit/) = :sparkles:
@@ -202,7 +207,3 @@ python = "^3.12"
 pre-commit = "^3.5.0"
 ...
 ```
-
----
-
-# [Demo](../demo/)
